@@ -1,0 +1,165 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://game/game.gd" type="Script" id=1]
+[ext_resource path="res://game/fields.gd" type="Script" id=2]
+[ext_resource path="res://game/map.gd" type="Script" id=3]
+[ext_resource path="res://imported/stadtfld.tsx" type="TileSet" id=4]
+[ext_resource path="res://game/player.gd" type="Script" id=5]
+[ext_resource path="res://hud/hud.tscn" type="PackedScene" id=6]
+[ext_resource path="res://sounds/background.ogg" type="AudioStream" id=7]
+[ext_resource path="res://game/camera.gd" type="Script" id=8]
+[ext_resource path="res://game/save_game_loader.gd" type="Script" id=9]
+
+[node name="game" type="Node2D"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="fields" type="Node" parent="." index="0"]
+
+script = ExtResource( 2 )
+
+[node name="buildings" type="Node" parent="fields" index="0"]
+
+[node name="land" type="Node" parent="fields" index="1"]
+
+[node name="map" type="Node2D" parent="." index="1"]
+
+script = ExtResource( 3 )
+
+[node name="water" type="TileMap" parent="map" index="0"]
+
+mode = 1
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 64, 31 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+_sections_unfolded = [ "Cell" ]
+
+[node name="land" type="TileMap" parent="map" index="1"]
+
+mode = 1
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 64, 31 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+_sections_unfolded = [ "Cell" ]
+
+[node name="buildings" type="TileMap" parent="map" index="2"]
+
+mode = 1
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 64, 31 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+_sections_unfolded = [ "Cell" ]
+
+[node name="temp" type="TileMap" parent="map" index="3"]
+
+mode = 1
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 64, 31 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray(  )
+_sections_unfolded = [ "Cell" ]
+
+[node name="players" type="Node2D" parent="." index="2"]
+
+[node name="player" type="Node" parent="players" index="0"]
+
+script = ExtResource( 5 )
+
+[node name="hud" parent="." index="3" instance=ExtResource( 6 )]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="4"]
+
+pause_mode = 2
+stream = ExtResource( 7 )
+volume_db = 0.0
+autoplay = true
+mix_target = 0
+bus = "Master"
+_sections_unfolded = [ "Pause" ]
+
+[node name="camera" type="Camera2D" parent="." index="5"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+script = ExtResource( 8 )
+_sections_unfolded = [ "Drag Margin", "Editor", "Limit", "Offset", "Smoothing", "Transform" ]
+
+[node name="save_game_loader" type="Node" parent="." index="6"]
+
+script = ExtResource( 9 )
+
+

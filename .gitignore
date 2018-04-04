@@ -1,0 +1,15 @@
+/addons/vnen.tiled_importer/
+
+# Imported Anno files
+/imported/*
+
+/sounds
+
+# Tools
+/tools/COD1602
+/tools/Grafx1602
+/tools/Tiled
+
+# Godot generated files
+/.import/*
+*.import

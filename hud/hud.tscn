@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://hud/hud.gd" type="Script" id=1]
+[ext_resource path="res://hud/menu_build_buildings.gd" type="Script" id=2]
+
+[node name="hud" type="CanvasLayer"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="." index="0"]
+
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -264.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Focus", "Hint", "Mouse", "Rect", "Theme", "custom_styles" ]
+
+[node name="menu_build" type="Container" parent="Panel" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect" ]
+
+[node name="menu_build_buildings" type="ItemList" parent="Panel/menu_build" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+focus_mode = 1
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+items = [  ]
+select_mode = 0
+allow_reselect = false
+max_text_lines = 2
+auto_height = true
+max_columns = 3
+icon_mode = 1
+fixed_icon_size = Vector2( 0, 0 )
+script = ExtResource( 2 )
+_sections_unfolded = [ "Anchor", "Columns", "Focus", "Grow Direction", "Hint", "Icon", "Margin", "Mouse" ]
+
+[connection signal="building_selected" from="Panel/menu_build/menu_build_buildings" to="." method="_on_building_selected"]
+
+[connection signal="item_selected" from="Panel/menu_build/menu_build_buildings" to="Panel/menu_build/menu_build_buildings" method="_on_menu_build_buildings_item_selected"]
+
+
