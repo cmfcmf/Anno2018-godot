@@ -69,13 +69,14 @@ func parse_island_field(data):
 	
 	var bits = data.get_32()
 	
+	# TODO: Verify bitmasks are correct
 	island_field['rotation'] = (bits & 3)
-	island_field['ani']      = (bits >> 2) & 0xF
-	island_field['_']        = (bits >> 6) & 0xFF
-	island_field['status']   = (bits >> 14) & 0xE 
+	island_field['ani']      = (bits >> 2)  & 0xF
+	island_field['_']        = (bits >> 6)  & 0xFF
+	island_field['status']   = (bits >> 14) & 7
 	island_field['random']   = (bits >> 17) & 0x1F
-	island_field['player']   = (bits >> 22) & 0xE
-	island_field['_']        = (bits >> 25) & 0xEF
+	island_field['player']   = (bits >> 22) & 7
+	island_field['_']        = (bits >> 25) & 0x7F
 	
 	return island_field
 	
