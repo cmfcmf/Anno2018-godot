@@ -8,13 +8,28 @@ func generate_buildings(object_data):
 		#if item.has("Size") and item.has("Rotate"):
 		#	assert(item['Size'][0] * item['Size'][1] == item['Rotate'])
 		if item.has('Kind'):
-			if item['Kind'] in ['GEBAEUDE', 'STRASSE']:
+			if item['Kind'] in [
+					'GEBAEUDE', 'HQ', 
+					'STRASSE', 'BRUECKE', 'PLATZ', 
+					'WMUEHLE', 
+					'MINE', 
+					'MAUER', 'MAUERSTRAND', 'TOR', 'TURM', 'TURMSTRAND',
+				]:
 				dump_building(item)
 			elif item['Kind'] in [
-				'BODEN', 'MEER', 'WALD', 'RUINE', 
-				'STRANDRUINE', 'BRANDECK', 'HANGQUELL', 'HANGECK', 'STRANDVARI', 'STRANDHAUS', 
-				'HQ', 'STRANDECKI', 'STRANDECKA', 'HAFEN', 'FELS', 'FLUSS', 'FLUSSECK']:
+				'BODEN', 
+				'FLUSS', 'FLUSSECK',
+				'HANG', 'HANGQUELL', 'HANGECK',
+				'STRAND', 'STRANDMUND', 'STRANDRUINE', 'STRANDECKI', 'STRANDECKA', 'STRANDVARI',
+				'BRANDUNG', 'BRANDECK',
+				'PIER',
+				'MEER', 'WALD', 'RUINE',  'STRANDHAUS', 
+				'HAFEN', 'FELS',
+				'MUENDUNG']:
 				dump_land(item)
+			else:
+				print(item['Kind'])
+				assert(false)
 
 func dump_land(item):
 	var output_dir = Directory.new()

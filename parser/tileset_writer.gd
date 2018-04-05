@@ -36,9 +36,8 @@ func write_tileset(object_data, input_path, output_path):
 		for item in object_data['objects']['HAUS']['items'].values():
 			if item['Gfx'] <= int(gfx) and (the_item == null or the_item['Gfx'] < item['Gfx']):
 				the_item = item
-				break
-				
-		#offset_y -= the_item['Posoffs']
+
+		offset_y -= the_item['Posoffs']
 
 		tileset_header += '[ext_resource path="%s" type="Texture" id=%s]\n' % [file_path, gfx]
 		tileset_body += """

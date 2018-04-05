@@ -3,7 +3,7 @@
 [ext_resource path="res://menu/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://parser/parsers.tscn" type="PackedScene" id=2]
 
-[node name="main_menu" type="Node2D"]
+[node name="main_menu" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 

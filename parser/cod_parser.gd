@@ -69,7 +69,7 @@ func txt_to_json(input_path, output_path):
 			
 				var base_item_num = get_value(null, fill, false, variables)
 				var base_item = objects[current_object]['items'][base_item_num]
-				objects[current_object]['items'][current_item] = base_item.duplicate()
+				objects[current_object]['items'][current_item] = copy(base_item)
 			continue
 
 		# new (nested) object
@@ -101,6 +101,7 @@ func txt_to_json(input_path, output_path):
 			else:
 				# Received EndObj without current object!
 				assert(false)
+
 			continue
 
 		regex.compile("^(@?)(\\w+):\\s*(.*?)\\s*$")
@@ -110,17 +111,16 @@ func txt_to_json(input_path, output_path):
 			var key = result.get_string(2)
 			var value_str = result.get_string(3)
 
-			var value = get_value(key, value_str, is_math, variables)
+			var value = copy(get_value(key, value_str, is_math, variables))
 			variables[key] = value
 			if key == 'Nummer':
 				if template != null:
-					var tmp = template.duplicate()
+					var tmp = copy(template)
 					merge_dir(tmp, objects[current_object]['items'][current_item])
 					objects[current_object]['items'][current_item] = tmp
 
 				assert(current_nested_object == null)
 				current_item = value
-				# TODO: "Default-Werte festlegen"
 				#assert(current_item not in objects[current_object]['items'].keys())
 				objects[current_object]['items'][current_item] = {
 					'nested_objects': {}
@@ -169,7 +169,7 @@ func get_value(key, value, is_math, variables):
 		regex.compile("^(\\+|-)(\\d+)$")
 		result = regex.search(value)
 		if result:
-			var old_val = variables[key] if variables.has(key) else null
+			var old_val = copy(variables[key]) if variables.has(key) else null
 			if str(old_val) == 'RUINE_KONTOR_1':
 				# TODO
 				old_val = 424242
@@ -183,7 +183,7 @@ func get_value(key, value, is_math, variables):
 	regex.compile("^[A-Za-z0-9_]+$")
 	if regex.search(value):
 		# TODO: When is value not in variables
-		return variables[value] if value in variables else value
+		return copy(variables[value]) if value in variables else value
 	
 	if "," in value:
 		var values = Array(value.split(','))
@@ -221,3 +221,10 @@ static func merge_dir(target, patch):
 				target[key] = patch[key]
 		else:
 			target[key] = patch[key]
+			
+static func copy(value):
+	if typeof(value) == TYPE_ARRAY or typeof(value) == TYPE_DICTIONARY:
+		# https://github.com/godotengine/godot/issues/3697
+		return str2var(var2str(value))
+	
+	return value

@@ -137,6 +137,26 @@ EndObj;""", {
 		},
 	})
 
+func test_cod_txt_to_json_size():
+	assert_cod_txt_to_json("""
+Objekt: HELLO
+	Nummer:    1
+	Id:        1
+	Size:      2, 3
+EndObj;""", {
+		'variables': {
+			"Nummer": 1,
+			"Id": 1,
+			"Size": {"x": 2, "y": 3}
+		},
+		'objects': {
+			'HELLO': {
+				'items': {
+					'1': {"Id": 1, "Size": {"x": 2, "y": 3}, "nested_objects": {}},
+				},
+			},
+		},
+	})
 
 func test_cod_txt_to_json_objfill():
 	assert_cod_txt_to_json("""
@@ -186,6 +206,7 @@ Objekt: HELLO
 	@Nummer:    0
 	A:          5
 	Id:         10
+	Size:       1, 1
     ObjFill:    0,MAXHELLO
 
 	@Nummer:    +1
@@ -197,6 +218,7 @@ Objekt: HELLO
 	ObjFill:    NUMMERBASE
 	@Id:        +1
 	A:          7
+	Size:       2, 3
 
 	@Nummer:    +1
 	ObjFill:    NUMMERBASE
@@ -209,14 +231,15 @@ EndObj;""", {
 			"Nummer": 3,
 			"A": 7,
 			"B": 6,
+			"Size": {"x": 2, "y": 3},
 		},
 		'objects': {
 			'HELLO': {
 				'items': {
-					'0': {"Id": 10, "A": 5, "nested_objects": {}},
-					'1': {"Id": 11, "A": 5, "B": 6, "nested_objects": {}},
-					'2': {"Id": 12, "A": 7, "B": 6, "nested_objects": {}},
-					'3': {"Id": 13, "A": 5, "B": 6, "nested_objects": {}},
+					'0': {"Id": 10, "A": 5,         "Size": {"x": 1, "y": 1}, "nested_objects": {}},
+					'1': {"Id": 11, "A": 5, "B": 6, "Size": {"x": 1, "y": 1}, "nested_objects": {}},
+					'2': {"Id": 12, "A": 7, "B": 6, "Size": {"x": 2, "y": 3}, "nested_objects": {}},
+					'3': {"Id": 13, "A": 5, "B": 6, "Size": {"x": 1, "y": 1}, "nested_objects": {}},
 				},
 			},
 		},

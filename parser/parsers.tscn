@@ -7,7 +7,7 @@
 [ext_resource path="res://parser/cod_parser.gd" type="Script" id=5]
 [ext_resource path="res://parser/tileset_writer.gd" type="Script" id=6]
 
-[node name="parsers" type="Node"]
+[node name="parsers" type="Node" index="0"]
 
 script = ExtResource( 1 )
 
