@@ -14,6 +14,10 @@ func _ready():
 #	market.build($map/buildings, Vector2(10, 40))
 
 	var game = $save_game_loader.load_game("res://imported/saves/game00.gam")
+	
+	var building_fields = get_field_dict($fields/buildings.get_children())
+	var land_fields = get_field_dict($fields/land.get_children())
+	
 	for island in game['islands']:
 		print(island['num'])
 		print(island['width'])
@@ -22,14 +26,16 @@ func _ready():
 		print(island['y'])
 		for y in range(island['height']):
 			for x in range(island['width']):
-				var field = island['fields'][y][x]
+				var field = island['fields'][x][y]
 				var field_id = field['building']
-				for land in $fields/land.get_children():
-					if land.b_id == field_id:
-						land.draw_field($map/land, Vector2(island['x'] + x, island['y'] + y))
-						break
 				
-				for building in $fields/buildings.get_children():
-					if building.b_id == field_id:
-						building.build($map/buildings, Vector2(island['x'] + x, island['y'] + y))
-						break
+				if land_fields.has(field_id):
+					land_fields[field_id].draw_field($map/land, Vector2(island['x'] + x, island['y'] + y), field['rotation'])
+				elif building_fields.has(field_id):
+					building_fields[field_id].build($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'])
+
+func get_field_dict(scenes):
+	var dict = {}
+	for scene in scenes:
+		dict[scene.b_id] = scene
+	return dict	

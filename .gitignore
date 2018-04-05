@@ -1,4 +1,8 @@
 /addons/vnen.tiled_importer/
+/addons/gut/
+
+# Temporary test files
+/test/tmp
 
 # Imported Anno files
 /imported/*

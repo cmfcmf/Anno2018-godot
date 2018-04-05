@@ -3,7 +3,7 @@
 [ext_resource path="res://game/game.gd" type="Script" id=1]
 [ext_resource path="res://game/fields.gd" type="Script" id=2]
 [ext_resource path="res://game/map.gd" type="Script" id=3]
-[ext_resource path="res://imported/stadtfld.tsx" type="TileSet" id=4]
+[ext_resource path="res://imported/stadtfld.tres" type="TileSet" id=4]
 [ext_resource path="res://game/player.gd" type="Script" id=5]
 [ext_resource path="res://hud/hud.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sounds/background.ogg" type="AudioStream" id=7]
@@ -27,7 +27,7 @@ script = ExtResource( 2 )
 
 script = ExtResource( 3 )
 
-[node name="water" type="TileMap" parent="map" index="0"]
+[node name="land" type="TileMap" parent="map" index="0"]
 
 mode = 1
 tile_set = ExtResource( 4 )
@@ -48,7 +48,7 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
 
-[node name="land" type="TileMap" parent="map" index="1"]
+[node name="buildings" type="TileMap" parent="map" index="1"]
 
 mode = 1
 tile_set = ExtResource( 4 )
@@ -69,28 +69,7 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
 
-[node name="buildings" type="TileMap" parent="map" index="2"]
-
-mode = 1
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 64, 31 )
-cell_quadrant_size = 16
-cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-cell_half_offset = 2
-cell_tile_origin = 0
-cell_y_sort = false
-cell_clip_uv = false
-collision_use_kinematic = false
-collision_friction = 1.0
-collision_bounce = 0.0
-collision_layer = 1
-collision_mask = 1
-occluder_light_mask = 1
-format = 1
-tile_data = PoolIntArray(  )
-_sections_unfolded = [ "Cell" ]
-
-[node name="temp" type="TileMap" parent="map" index="3"]
+[node name="temp" type="TileMap" parent="map" index="2"]
 
 mode = 1
 tile_set = ExtResource( 4 )

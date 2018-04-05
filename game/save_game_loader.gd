@@ -29,13 +29,13 @@ func load_game(game_path):
 
 func raster_island(island, data_len, data):
 	var fields = []
-	for y in range(island['height']):
+	for x in range(island['width']):
 		fields.append([])
-		for x in range(island['width']):
-			fields[y].append({
+		for y in range(island['height']):
+			fields[x].append({
 				'building': 0xFFFF,
-				'x': 0,
-				'y': 0,
+				'x': 0, # x relative to the building's origin
+				'y': 0, # y relative to the building's origin
 			})
 			
 	for i in range(data_len / 8):
@@ -47,15 +47,15 @@ func raster_island(island, data_len, data):
 		if building_id != 0xFFFF:
 			# TODO Take building size and rotation into account
 			
-			fields[(field['y'])][(field['x'])] = field
+			fields[(field['x'])][(field['y'])] = field
 			# x and y are actually relative to the current building.
-			fields[(field['y'])][(field['x'])]['x'] = 0
-			fields[(field['y'])][(field['x'])]['y'] = 0
+			fields[(field['x'])][(field['y'])]['x'] = 0
+			fields[(field['x'])][(field['y'])]['y'] = 0
 		else:
-			fields[(field['y'])][(field['x'])] = field
+			fields[(field['x'])][(field['y'])] = field
 			# x and y are actually relative to the current building.
-			fields[(field['y'])][(field['x'])]['x'] = 0
-			fields[(field['y'])][(field['x'])]['y'] = 0
+			fields[(field['x'])][(field['y'])]['x'] = 0
+			fields[(field['x'])][(field['y'])]['y'] = 0
 	
 	island['fields'] = fields
 	
@@ -64,6 +64,7 @@ func raster_island(island, data_len, data):
 func parse_island_field(data):
 	var island_field = {}
 	island_field['building'] = data.get_16() + 20000
+	# x and y are relative to the island's origin
 	island_field['x'] = data.get_8()
 	island_field['y'] = data.get_8()
 	
