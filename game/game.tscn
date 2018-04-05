@@ -10,7 +10,7 @@
 [ext_resource path="res://game/camera.gd" type="Script" id=8]
 [ext_resource path="res://game/save_game_loader.gd" type="Script" id=9]
 
-[node name="game" type="Node2D"]
+[node name="game" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -105,7 +105,7 @@ _sections_unfolded = [ "Transform" ]
 pause_mode = 2
 stream = ExtResource( 7 )
 volume_db = 0.0
-autoplay = true
+autoplay = false
 mix_target = 0
 bus = "Master"
 _sections_unfolded = [ "Pause" ]

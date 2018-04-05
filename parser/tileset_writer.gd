@@ -19,7 +19,7 @@ func write_tileset(object_data, input_path, output_path):
 
 		cnt += 1
 		
-		var id = filename.substr(0, len(filename) - len(".png"))
+		var gfx = filename.substr(0, len(filename) - len(".png"))
 		
 		var file_path = input_path + "/" + filename
 		var file = File.new()
@@ -32,12 +32,15 @@ func write_tileset(object_data, input_path, output_path):
 		var height = image.get_height()
 		
 		var offset_y = -height
+		var the_item = null
 		for item in object_data['objects']['HAUS']['items'].values():
-			if item['Id'] == int(id):
-				#offset_y -= item['Posoffs']
+			if item['Gfx'] <= int(gfx) and (the_item == null or the_item['Gfx'] < item['Gfx']):
+				the_item = item
 				break
+				
+		offset_y -= the_item['Posoffs']
 
-		tileset_header += '[ext_resource path="%s" type="Texture" id=%s]\n' % [file_path, id]
+		tileset_header += '[ext_resource path="%s" type="Texture" id=%s]\n' % [file_path, gfx]
 		tileset_body += """
 {id}/name = ""
 {id}/texture = ExtResource( {id} )
@@ -47,7 +50,7 @@ func write_tileset(object_data, input_path, output_path):
 {id}/is_autotile = false
 {id}/occluder_offset = Vector2( 0, 0 )
 {id}/navigation_offset = Vector2( 0, 0 )
-{id}/shapes = [  ]""".format({'id': id, 'offset_y': offset_y})
+{id}/shapes = [  ]""".format({'id': gfx, 'offset_y': offset_y})
 
 	input_dir.list_dir_end()
 	
