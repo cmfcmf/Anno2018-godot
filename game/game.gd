@@ -29,9 +29,9 @@ func _ready():
 				var field = island['fields'][x][y]
 				var field_id = field['building']
 				
-				if land_fields.has(field_id):
-					land_fields[field_id].draw_field($map/land, Vector2(island['x'] + x, island['y'] + y), field['rotation'])
-				elif building_fields.has(field_id):
+				#if land_fields.has(field_id):
+				#	land_fields[field_id].draw_field($map/land, Vector2(island['x'] + x, island['y'] + y), field['rotation'])
+				if building_fields.has(field_id):
 					building_fields[field_id].build($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'])
 
 func get_field_dict(scenes):
