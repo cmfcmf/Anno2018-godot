@@ -14,6 +14,13 @@ func _on_load_files_dialog_dir_selected(dir):
 		"GFX/STADTFLD.BSH",
 		"ToolGfx/TOOLS.BSH",
 	]
+	var required_folders = [
+		"SUED",
+		"SUEDNAT",
+		"NORD",
+		"NORDNAT",
+		"NOKLIMA",
+	]
 	
 	var anno_dir = Directory.new()
 	anno_dir.open(dir)
@@ -21,6 +28,12 @@ func _on_load_files_dialog_dir_selected(dir):
 	for file in required_files:
 		if not anno_dir.file_exists(file):
 			$warning_dialog.set_text("Missing file: " + file)
+			$warning_dialog.popup_centered()
+			return
+	
+	for folder in required_folders:
+		if not anno_dir.dir_exists(folder):
+			$warning_dialog.set_text("Missing folder: " + folder)
 			$warning_dialog.popup_centered()
 			return
 	
