@@ -3,7 +3,7 @@
 [ext_resource path="res://menu/main_menu.gd" type="Script" id=1]
 [ext_resource path="res://parser/parsers.tscn" type="PackedScene" id=2]
 
-[node name="main_menu" type="Node2D" index="0"]
+[node name="main_menu" type="Node2D"]
 
 script = ExtResource( 1 )
 
@@ -32,7 +32,57 @@ text = "Start Game"
 flat = false
 align = 1
 
-[node name="load_files_dialog" type="FileDialog" parent="." index="1"]
+[node name="load_files_btn" type="Button" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 31.0
+margin_top = 64.0
+margin_right = 205.0
+margin_bottom = 96.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Load Anno 1602 Files"
+flat = false
+align = 1
+
+[node name="run_tests_btn" type="Button" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 113.0
+margin_right = 204.0
+margin_bottom = 145.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Run Tests"
+flat = false
+align = 1
+
+[node name="load_files_dialog" type="FileDialog" parent="." index="3"]
 
 visible = false
 anchor_left = 0.0
@@ -65,32 +115,7 @@ current_file = ""
 current_path = "E:/Spiele/Klassiker/Anno 1602/"
 _sections_unfolded = [ "Dialog" ]
 
-[node name="load_files_btn" type="Button" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 31.0
-margin_top = 64.0
-margin_right = 205.0
-margin_bottom = 96.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Load Anno 1602 Files"
-flat = false
-align = 1
-
-[node name="warning_dialog" type="AcceptDialog" parent="." index="3"]
+[node name="warning_dialog" type="AcceptDialog" parent="." index="4"]
 
 visible = false
 anchor_left = 0.0
@@ -113,12 +138,14 @@ resizable = false
 dialog_hide_on_ok = true
 _sections_unfolded = [ "Dialog" ]
 
-[node name="parsers" parent="." index="4" instance=ExtResource( 2 )]
+[node name="parsers" parent="." index="5" instance=ExtResource( 2 )]
 
 [connection signal="pressed" from="start_game_btn" to="." method="_on_start_game_btn_pressed"]
 
-[connection signal="dir_selected" from="load_files_dialog" to="." method="_on_load_files_dialog_dir_selected"]
-
 [connection signal="pressed" from="load_files_btn" to="." method="_on_load_files_btn_pressed"]
+
+[connection signal="pressed" from="run_tests_btn" to="." method="_on_run_tests_btn_pressed"]
+
+[connection signal="dir_selected" from="load_files_dialog" to="." method="_on_load_files_dialog_dir_selected"]
 
 
