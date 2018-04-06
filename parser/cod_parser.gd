@@ -25,10 +25,13 @@ func txt_to_json(input_path, output_path):
 	var variables = {}
 	var objects = {}
 	var template = null
+	var gfx_map = {}
 
+	var last_gfx_name = null
 	var current_object = null
 	var current_nested_object = null
 	var current_item = null
+	var current_nested_item = 0
 	
 	while not cod_txt_file.eof_reached():
 		var line = cod_txt_file.get_line()
@@ -37,7 +40,7 @@ func txt_to_json(input_path, output_path):
 			continue
 
 		# Skipped
-		if line.begins_with('Nahrung:'):
+		if line.begins_with('Nahrung:') or line.begins_with('Soldat:') or line.begins_with('Turm:'):
 			# TODO: skipped for now
 			continue
 		
@@ -48,6 +51,15 @@ func txt_to_json(input_path, output_path):
 			var is_math = len(result.get_string(1)) > 0
 			var constant = result.get_string(2)
 			var value = result.get_string(3)
+			
+			if constant.begins_with("GFX"):
+				if value == "0":
+					gfx_map[constant] = constant
+				elif value.begins_with("GFX"):
+					var current_gfx = value.split("+")[0]
+					if gfx_map.has(current_gfx):
+						gfx_map[constant] = gfx_map[current_gfx]
+			
 			variables[constant] = get_value(constant, value, is_math, variables)
 			continue
 			
@@ -70,6 +82,9 @@ func txt_to_json(input_path, output_path):
 				var base_item_num = get_value(null, fill, false, variables)
 				var base_item = objects[current_object]['items'][base_item_num]
 				objects[current_object]['items'][current_item] = copy(base_item)
+				
+				if last_gfx_name != null:
+					objects[current_object]['items'][current_item]['GfxCategory'] = last_gfx_name
 			continue
 
 		# new (nested) object
@@ -85,7 +100,8 @@ func txt_to_json(input_path, output_path):
 			elif current_nested_object == null:
 				assert(current_item != null)
 				current_nested_object = object_name
-				objects[current_object]['items'][current_item]['nested_objects'][current_nested_object] = {}
+				current_nested_item = 0
+				objects[current_object]['items'][current_item]['nested_objects'][current_nested_object] = {current_nested_item: {}}
 			else:
 				# Cannot have more than one nesting level!
 				assert(false)
@@ -95,6 +111,7 @@ func txt_to_json(input_path, output_path):
 		if line == 'EndObj':
 			if current_nested_object != null:
 				current_nested_object = null
+				current_nested_item = null
 			elif current_object != null:
 				current_object = null
 				current_item = null
@@ -114,27 +131,35 @@ func txt_to_json(input_path, output_path):
 			var value = copy(get_value(key, value_str, is_math, variables))
 			variables[key] = value
 			if key == 'Nummer':
-				if template != null:
-					var tmp = copy(template)
-					merge_dir(tmp, objects[current_object]['items'][current_item])
-					objects[current_object]['items'][current_item] = tmp
-
-				assert(current_nested_object == null)
-				current_item = value
-				#assert(current_item not in objects[current_object]['items'].keys())
-				objects[current_object]['items'][current_item] = {
-					'nested_objects': {}
-				}
+				if current_nested_object == null:
+					if template != null:
+						var tmp = copy(template)
+						merge_dir(tmp, objects[current_object]['items'][current_item])
+						objects[current_object]['items'][current_item] = tmp
+	
+					current_item = value
+					#assert(current_item not in objects[current_object]['items'].keys())
+					objects[current_object]['items'][current_item] = {
+						'nested_objects': {}
+					}
+				else:
+					current_nested_item = value
+					objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][current_nested_item] = {}
 				continue
-
+			
+			if key == 'Gfx' and value_str.begins_with('GFX'):
+				last_gfx_name = value_str.split("+")[0]
+			
 			if current_nested_object == null:
 				objects[current_object]['items'][current_item][key] = value
+				if last_gfx_name != null:
+					objects[current_object]['items'][current_item]['GfxCategory'] = last_gfx_name
 			else:
-				if objects[current_object]['items'][current_item]['nested_objects'][current_nested_object].has(key):
-					assert(typeof(objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][key]) == TYPE_DICTIONARY)
-					merge_dir(objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][key], value)
+				if objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][current_nested_item].has(key):
+					assert(typeof(objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][current_nested_item][key]) == TYPE_DICTIONARY)
+					merge_dir(objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][current_nested_item][key], value)
 				else:
-					objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][key] = value
+					objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][current_nested_item][key] = value
 
 			continue
 
@@ -144,6 +169,7 @@ func txt_to_json(input_path, output_path):
 	var object_data = {
 		'variables': variables,
 		'objects': objects,
+		'gfx_category_map': gfx_map,
 	}
 	
 	var cod_json_file = File.new()
@@ -156,14 +182,6 @@ func txt_to_json(input_path, output_path):
 func get_value(key, value, is_math, variables):
 	var regex = RegEx.new()
 	var result = null
-	
-	regex.compile("^\\d+$")
-	if regex.search(value):
-		return int(value)
-	
-	regex.compile("^\\d+\\.\\d+$")
-	if regex.search(value):
-		return float(value)
 	
 	if is_math:
 		regex.compile("^(\\+|-)(\\d+)$")
@@ -179,6 +197,14 @@ func get_value(key, value, is_math, variables):
 				return old_val - int(result.get_string(2))
 			else:
 				assert(false)
+	
+	regex.compile("^[\\-+]?\\d+$")
+	if regex.search(value):
+		return int(value)
+	
+	regex.compile("^[\\-+]?\\d+\\.\\d+$")
+	if regex.search(value):
+		return float(value)
 	
 	regex.compile("^[A-Za-z0-9_]+$")
 	if regex.search(value):

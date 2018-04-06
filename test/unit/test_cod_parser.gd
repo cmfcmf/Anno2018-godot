@@ -53,6 +53,7 @@ KOST_BEDARF_3_SLP = 38
 			# TODO: Nahrung
 			'KOST_BEDARF_3_SLP': 38,
 		},
+		'gfx_category_map': {},
 	})
 	
 func test_cod_txt_to_json_objects():
@@ -92,10 +93,12 @@ func test_cod_txt_to_json_objects():
 						"Steuer": 1.6,
 						"nested_objects": {
 							'BGRUPPE_WARE': {
-								'Foo': 'bar',
-								'Ware': {
-									'STOFFE': 0.6,
-									'ALKOHOL': 0.5,
+								0: {
+									'Foo': 'bar',
+									'Ware': {
+										'STOFFE': 0.6,
+										'ALKOHOL': 0.5,
+									}
 								},
 							},
 						},
@@ -103,6 +106,7 @@ func test_cod_txt_to_json_objects():
 				},
 			},
 		},
+		'gfx_category_map': {},
 	})
 
 func test_cod_txt_to_json_at_sign():
@@ -135,6 +139,7 @@ EndObj;""", {
 				},
 			},
 		},
+		'gfx_category_map': {},
 	})
 
 func test_cod_txt_to_json_size():
@@ -156,6 +161,7 @@ EndObj;""", {
 				},
 			},
 		},
+		'gfx_category_map': {},
 	})
 
 func test_cod_txt_to_json_objfill():
@@ -198,6 +204,7 @@ EndObj;""", {
 				},
 			},
 		},
+		'gfx_category_map': {},
 	})
 
 func test_cod_txt_to_json_objfill_max():
@@ -243,6 +250,7 @@ EndObj;""", {
 				},
 			},
 		},
+		'gfx_category_map': {},
 	})
 
 func assert_cod_txt_to_json(input, output):
