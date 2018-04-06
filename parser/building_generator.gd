@@ -1,7 +1,11 @@
 extends Node
 
+const BUILDING_PATH = "res://imported/buildings"
 
 func generate_buildings(object_data):
+	var output_dir = Directory.new()
+	assert(output_dir.make_dir_recursive(BUILDING_PATH) == OK)
+	
 	for item in object_data['objects']['HAUS']['items'].values():
 		assert(item.has("Kind"))
 		assert(item.has('Gfx'))
@@ -35,7 +39,7 @@ func generate_buildings(object_data):
 
 func dump_land(item):
 	var output_dir = Directory.new()
-	assert(output_dir.open("res://imported/land") == OK)
+	assert(output_dir.open(BUILDING_PATH) == OK)
 
 	var id = item['Id']
 	var gfx = item['Gfx']
@@ -59,7 +63,7 @@ func init():
 
 func dump_building(item):
 	var output_dir = Directory.new()
-	assert(output_dir.open("res://imported/buildings") == OK)
+	assert(output_dir.open(BUILDING_PATH) == OK)
 
 	var id = item['Id']
 	var gfx = item['Gfx']

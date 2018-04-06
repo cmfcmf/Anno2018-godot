@@ -9,12 +9,12 @@ func parse(dir):
 	var object_data = $cod_parser.txt_to_json("res://imported/haeuser.cod.txt", "res://imported/haeuser.cod.json")
 	# TODO: Doesn't work yet!
 	#$cod_parser.txt_to_json("res://imported/figuren.cod.txt", "res://imported/figuren.cod.json")
-
-	# Import .bsh files - takes a long time.
-	#$bsh_parser.bsh_convert(dir + "/GFX/STADTFLD.BSH", "res://imported/stadtfld")
-	#$bsh_parser.bsh_convert(dir + "/ToolGfx/TOOLS.BSH", "res://imported/tools")
 	
-	# Generate Tiled tileset
+	# Import .bsh files - takes a long time.
+	$bsh_parser.bsh_convert(dir + "/GFX/STADTFLD.BSH", "res://imported/stadtfld")
+	$bsh_parser.bsh_convert(dir + "/ToolGfx/TOOLS.BSH", "res://imported/tools")
+	
+	# Generate tileset
 	$tileset_writer.write_tileset(object_data, "res://imported/stadtfld", "res://imported/stadtfld.tres")
 	
 	$building_generator.generate_buildings(object_data)
@@ -29,7 +29,9 @@ func copy_islands(dir):
 func copy_directory(from_dir_path, to_dir_path):
 	var from_dir = Directory.new()
 	assert(from_dir.open(from_dir_path) == OK)
+	
 	var to_dir = Directory.new()
+	assert(to_dir.make_dir_recursive(to_dir_path) == OK)
 	assert(to_dir.open(to_dir_path) == OK)
 	
 	from_dir.list_dir_begin(true)

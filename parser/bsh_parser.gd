@@ -2,10 +2,15 @@ extends Node
 
 func bsh_convert(input_path, output_path):
 	var bsh_file = File.new()
-	bsh_file.open(input_path, File.READ)
+	assert(bsh_file.open(input_path, File.READ) == OK)
 
 	var out_dir = Directory.new()
-	out_dir.open(output_path)
+	if out_dir.dir_exists(output_path):
+		print("Skipping BSH conversion of %s because %s already exists." % [input_path, output_path])
+		return
+		
+	assert(out_dir.make_dir_recursive(output_path) == OK)
+	assert(out_dir.open(output_path) == OK)
 
 	var HEADER_SIZE = 20
 	var bsh_header = {}
@@ -85,6 +90,6 @@ func bsh_convert(input_path, output_path):
 
 		var image = Image.new()
 		image.create_from_data(bsh_image['width'], bsh_image['height'], false, Image.FORMAT_RGBA8, bsh_image['puffer'])
-		image.save_png(output_path + "/" + str(i + 1) + ".png")
+		assert(image.save_png(output_path + "/" + str(i + 1) + ".png") == OK)
 
 	bsh_file.close()

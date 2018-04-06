@@ -6,6 +6,9 @@
 
 # Imported Anno files
 /imported/*
+!/imported/.gitkeep
+!/imported/base.gd
+!/imported/base_building.gd
 
 /sounds
 
