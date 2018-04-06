@@ -9,7 +9,7 @@
 [ext_resource path="res://game/camera.gd" type="Script" id=7]
 [ext_resource path="res://game/save_game_loader.gd" type="Script" id=8]
 
-[node name="game" type="Node2D" index="0"]
+[node name="game" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
