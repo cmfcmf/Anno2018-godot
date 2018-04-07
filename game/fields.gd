@@ -6,14 +6,14 @@ func _ready():
 	
 func load_field_type(type):
 	var dir = Directory.new()
-	assert(dir.open("res://imported/%s" % type) == OK)
+	assert(dir.open("res://imported/stadtfld") == OK)
 	
 	dir.list_dir_begin(true)
 	while true:
 		var filename = dir.get_next()
 		if filename == "":
 			break
-		var res_path = "res://imported/%s/%s/%s.tscn" % [type, filename, filename]
+		var res_path = "res://imported/stadtfld/%s/%s.tscn" % [filename, filename]
 		if not dir.file_exists(res_path):
 			continue
 		var scene = load(res_path).instance()
