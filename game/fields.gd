@@ -17,7 +17,7 @@ func load_field_type(type):
 		if not dir.file_exists(res_path):
 			continue
 		var scene = load(res_path).instance()
-		scene.add_to_group(type)
+		scene.add_to_group("fields")
 		get_node(type).add_child(scene)
 		scene.init()
 
