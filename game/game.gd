@@ -12,7 +12,7 @@ func _ready():
 				var field_id = field['building']
 				if field_id != 0xFFFF:
 					assert(fields.has(field_id))
-					fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], n_rotations, field['ani'])
+					fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], field['ani'])
 				
 		for y in range(island['height']):
 			for x in range(island['width']):
@@ -20,7 +20,7 @@ func _ready():
 				var field_id = field['building']
 				if field_id != 0xFFFF:
 					assert(fields.has(field_id))
-					fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], n_rotations, field['ani'])
+					fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], field['ani'])
 				
 func get_field_dict(scenes):
 	var dict = {}
