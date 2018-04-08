@@ -90,11 +90,11 @@ func parse_island_field(data):
 	# TODO: Verify bitmasks are correct
 	island_field['rotation'] = (bits & 3)
 	island_field['ani']      = (bits >> 2)  & 0xF
-	island_field['_']        = (bits >> 6)  & 0xFF
+	island_field['_1']       = (bits >> 6)  & 0xFF
 	island_field['status']   = (bits >> 14) & 7
 	island_field['random']   = (bits >> 17) & 0x1F
 	island_field['player']   = (bits >> 22) & 7
-	island_field['_']        = (bits >> 25) & 0x7F
+	island_field['_2']       = (bits >> 25) & 0x7F
 	
 	return island_field
 	
@@ -103,24 +103,24 @@ func parse_island(data):
 	island['num'] = data.get_8()
 	island['width'] = data.get_8()
 	island['height'] = data.get_8()
-	island['_'] = data.get_8()
+	island['_1'] = data.get_8()
 	island['x'] = data.get_16()
 	island['y'] = data.get_16()
-	island['_'] = data.get_16()
-	island['_'] = data.get_16()
-	island['_'] = data.get_buffer(14)
+	island['_2'] = data.get_16()
+	island['_3'] = data.get_16()
+	island['_4'] = data.get_buffer(14)
 	island['num_ore_locations'] = data.get_8()
 	island['fertility_discovered'] = data.get_8()
 	island['ore_locations'] = [parse_ore_location(data), parse_ore_location(data)]
-	island['_'] = data.get_buffer(48)
+	island['_5'] = data.get_buffer(48)
 	island['fertility'] = data.get_8()
-	island['_'] = data.get_8()
-	island['_'] = data.get_16()
+	island['_6'] = data.get_8()
+	island['_7'] = data.get_16()
 	island['num_base_island'] = data.get_16()
-	island['_'] = data.get_16()
+	island['_8'] = data.get_16()
 	island['is_south'] = data.get_8()
 	island['diff'] = data.get_8()
-	island['_'] = data.get_buffer(14)
+	island['_9'] = data.get_buffer(14)
 	island['default_fields'] = []
 	island['current_fields'] = []
 	return island
