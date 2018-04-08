@@ -1,29 +1,34 @@
 extends Node2D
 
+var fields = null
+
 func _ready():
-	var game = $save_game_loader.load_game("res://imported/saves/game00.gam")
+	var game = $save_game_loader.load_game("res://imported/saves/mauer_test.szs")
 	
-	var fields = get_field_dict(get_tree().get_nodes_in_group("fields"))
-	var n_rotations = 1
+	fields = get_field_dict(get_tree().get_nodes_in_group("fields"))
+	
 	for island in game['islands']:
-		for y in range(island['height']):
-			for x in range(island['width']):
-				var field = island['default_fields'][x][y]
-				var field_id = field['building']
-				if field_id != 0xFFFF:
-					assert(fields.has(field_id))
-					fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], field['ani'])
-				
+		if island['diff'] == 0:
+			for y in range(island['height']):
+				for x in range(island['width']):
+					var field = island['default_fields'][x][y]
+					draw_field(island, x, y, field)
+		
 		for y in range(island['height']):
 			for x in range(island['width']):
 				var field = island['current_fields'][x][y]
-				var field_id = field['building']
-				if field_id != 0xFFFF:
-					assert(fields.has(field_id))
-					fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], field['ani'])
+				draw_field(island, x, y, field)
 				
+func draw_field(island, x, y, field):
+	var field_id = field['building']
+	if field_id != 0xFFFF:
+		assert(fields.has(field_id))
+		if field_id == 22561:
+			assert(true)
+		fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], field['ani'])
+
 func get_field_dict(scenes):
 	var dict = {}
 	for scene in scenes:
 		dict[scene.b_id] = scene
-	return dict	
+	return dict

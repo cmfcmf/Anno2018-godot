@@ -1,10 +1,8 @@
 extends Node
 
 func _ready():
-	load_field_type('buildings')
-	load_field_type('land')
+	var field_data = load_field_data()
 	
-func load_field_type(type):
 	var dir = Directory.new()
 	assert(dir.open("res://imported/buildings") == OK)
 	
@@ -13,12 +11,32 @@ func load_field_type(type):
 		var filename = dir.get_next()
 		if filename == "":
 			break
-		var res_path = "res://imported/buildings/%s/%s.tscn" % [filename, filename]
-		if not dir.file_exists(res_path):
-			continue
+		var id = int(filename)
+		var res_path = "res://imported/buildings/%s/%s.tscn" % [id, id]
+		assert(dir.file_exists(res_path))
 		var scene = load(res_path).instance()
 		scene.add_to_group("fields")
-		get_node(type).add_child(scene)
-		scene.init()
+		add_child(scene)
+		scene.init({})#field_data['fields'][id])
 
-	dir.list_dir_end()
+func load_field_data():
+	var object_data = load_json("res://imported/haeuser.cod.json")
+	var figure_data = load_json("res://imported/figuren.cod.json")
+	
+	var field_data = {}
+	for item in object_data['objects']['HAUS']['items'].values():
+		# TODO: Flussmündungsmauern haben gleiche ID!
+		#assert(not field_data.has(item['Id']))
+		field_data[item['Id']] = item
+	
+	return {
+		'fields': field_data,
+		'animations': figure_data['objects']['FIGUR']['items'],
+	}
+	
+func load_json(path):
+	var json_file = File.new()
+	assert(json_file.open(path, File.READ) == OK)
+	var parse_result = JSON.parse(json_file.get_as_text())
+	assert(parse_result.error == OK)
+	return parse_result.result

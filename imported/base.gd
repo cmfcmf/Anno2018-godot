@@ -10,11 +10,10 @@ var b_can_be_built = false
 
 var b_position = Vector2(0, 0)
 
-func _ready():
-	init()
+var config = null
 
-func init():
-	pass
+func init(settings):
+	config = settings
 
 func located_at(tile_pos):
 	return b_position.x <= tile_pos.x and tile_pos.x < b_position.x + b_size.x and \
