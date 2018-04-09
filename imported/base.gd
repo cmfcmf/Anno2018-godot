@@ -11,9 +11,11 @@ var b_can_be_built = false
 var b_position = Vector2(0, 0)
 
 var config = null
+var rauch_animations = []
 
-func init(settings):
-	config = settings
+func init(config, rauch_animations):
+	self.config = config
+	self.rauch_animations = rauch_animations
 
 func located_at(tile_pos):
 	return b_position.x <= tile_pos.x and tile_pos.x < b_position.x + b_size.x and \
@@ -25,6 +27,15 @@ func draw_field(map, pos, rotation, animation_step):
 	for y in range(sy):
 		for x in range(sx):
 			map.set_cellv(pos + Vector2(x, y), get_tile_id(x, y, rotation, animation_step))
+			
+	for rauch_animation_name in rauch_animations.keys():
+		var rauch_animation = rauch_animations[rauch_animation_name]
+		var animated_sprite = AnimatedSprite.new()
+		animated_sprite.frames = load("res://imported/animations/%s_0.res" % rauch_animation_name)
+		animated_sprite.playing = true
+		animated_sprite.offset = Vector2(0, -50)
+		animated_sprite.position = map.map_to_world(pos)
+		map.add_child(animated_sprite)
 
 func get_tile_id(x, y, rotation, animation_step):
 	var tile_id = 1 + b_gfx

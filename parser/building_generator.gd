@@ -53,7 +53,7 @@ func dump_land(item):
 #
 
 extends "../../base.gd"
-func init(config):
+func init(config, rauch_animations):
 	b_id = %s
 	b_gfx = %s
 	b_kind = "%s"
@@ -61,7 +61,7 @@ func init(config):
 	b_rotate = %s
 	b_anim_add = %s
 	
-	.init(config)""" % [id, gfx, kind, size.x, size.y, rotate, anim_add])
+	.init(config, rauch_animations)""" % [id, gfx, kind, size.x, size.y, rotate, anim_add])
 
 	dump_tscn(output_dir, id)
 
@@ -91,7 +91,7 @@ func dump_building(item):
 #
 
 extends "../../base_building.gd"
-func init(config):
+func init(config, rauch_animations):
 	b_id = %s
 	b_name = "%s"
 	b_gfx = %s
@@ -103,7 +103,7 @@ func init(config):
 	b_gfx_bau = %s
 	b_can_be_built = %s
 	
-	.init(config)""" % [id, gfx, gfx, kind, size.x, size.y, rotate, anim_add, gfx_menu, gfx_bau, can_be_built])
+	.init(config, rauch_animations)""" % [id, gfx, gfx, kind, size.x, size.y, rotate, anim_add, gfx_menu, gfx_bau, can_be_built])
 	
 	dump_tscn(output_dir, id)
 
