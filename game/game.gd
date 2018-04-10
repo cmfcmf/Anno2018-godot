@@ -23,8 +23,6 @@ func draw_field(island, x, y, field):
 	var field_id = field['building']
 	if field_id != 0xFFFF:
 		assert(fields.has(field_id))
-		if field_id == 22561:
-			assert(true)
 		fields[field_id].draw_field($map/buildings, Vector2(island['x'] + x, island['y'] + y), field['rotation'], field['ani'])
 
 func get_field_dict(scenes):
