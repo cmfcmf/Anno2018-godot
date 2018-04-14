@@ -3,6 +3,9 @@ extends Node2D
 func _on_start_game_btn_pressed():
 	get_tree().change_scene("res://game/game.tscn")
 
+func _on_multiplayer_btn_pressed():
+	get_tree().change_scene("res://multiplayer/multiplayer.tscn")
+
 func _on_run_tests_btn_pressed():
 	get_tree().change_scene("res://test/tests.tscn")
 
