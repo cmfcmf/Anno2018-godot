@@ -10,7 +10,7 @@ func cod_to_txt(input_path, output_path):
 	while not cod_file.eof_reached():
 		var byte = cod_file.get_8()
 		# Yes, it really is 256, not 255=0xFF.
-		out_file.store_string(PoolByteArray([256 - byte]).get_string_from_ascii())
+		out_file.store_8(256 - byte)
 	
 	cod_file.close()
 	out_file.close()
