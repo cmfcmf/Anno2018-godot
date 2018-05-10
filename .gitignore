@@ -1,4 +1,3 @@
-/addons/vnen.tiled_importer/
 /addons/gut/
 
 # Temporary test files
@@ -11,11 +10,6 @@
 !/imported/base_building.gd
 
 /tmp
-
-# Tools
-/tools/COD1602
-/tools/Grafx1602
-/tools/Tiled
 
 # Godot generated files
 /.import/*
