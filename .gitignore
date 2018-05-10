@@ -11,6 +11,5 @@
 
 /tmp
 
-# Godot generated files
-/.import/*
-*.import
+# Godot .import folder
+/.import
