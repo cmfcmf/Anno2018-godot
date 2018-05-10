@@ -6,6 +6,14 @@ It uses grahics and configuration of the original game. Due to copyright law,
 I cannot include the Anno 1602 graphics with Anno 2018. You need to have a copy of
 Anno 1602 installed on your computer to import them into this game.
 
+## Thanks
+
+This would have never been possible without the work of countless Anno enthusiasts:
+- [Sir Henry](https://github.com/wzurborg) for their work on different tools around
+  the Anno1602 file formats.
+- [Benedikt Freisen](https://github.com/roybaer) for their work on _mdcii-engine_
+  and decoding further Anno1602 file formts.
+- The countless forum posts and websites who worked on Anno1602 mods.
 
 ## Roadmap
 
@@ -65,3 +73,8 @@ Anno 1602 installed on your computer to import them into this game.
 - [ ] Random island generation
 - [ ] Increase island and map size
 - [ ] Running on Android and iOS
+
+## License
+
+This project is licensed under GPLv2 or (at your option) any later version.
+See the LICENSE file for further information.
