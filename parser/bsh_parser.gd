@@ -1,5 +1,8 @@
 extends Node
 
+# The parsing algorithm is based on code from the 'mdcii-engine'
+# project by Benedikt Freisen released under GPLv2+. 
+# https://github.com/roybaer/mdcii-engine
 func bsh_convert(input_path, output_path):
 	var bsh_file = File.new()
 	assert(bsh_file.open(input_path, File.READ) == OK)

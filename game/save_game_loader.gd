@@ -1,3 +1,7 @@
+# The savegame datastructure was reverse engineered by Benedikt Freisen
+# as part of the 'mdcii-engine' project and released under GPLv2+.
+# https://github.com/roybaer/mdcii-engine
+
 extends Node
 
 func load_game(game_path):
