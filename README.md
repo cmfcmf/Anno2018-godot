@@ -12,7 +12,7 @@ This would have never been possible without the work of countless Anno enthusias
 - [Sir Henry](https://github.com/wzurborg) for their work on different tools around
   the Anno1602 file formats.
 - [Benedikt Freisen](https://github.com/roybaer) for their work on _mdcii-engine_
-  and decoding further Anno1602 file formts.
+  and decoding further Anno1602 file formats.
 - The countless forum posts and websites who worked on Anno1602 mods.
 
 ## Roadmap
