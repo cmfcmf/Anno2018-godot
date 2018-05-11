@@ -1,6 +1,6 @@
 extends Node
 
-const ANIMATION_PATH = "res://imported/animations"
+const ANIMATION_PATH = "user://imported/animations"
 
 func generate_animations(figure_data):
 	var animation_dir = Directory.new()
@@ -36,7 +36,7 @@ func generate_animations(figure_data):
 			gfx_filename = gfx_filename.substr(len('GFX'), len(gfx_filename) - len('GFX'))
 
 			for step in range(num_steps):
-				sf.add_frame("default", ResourceLoader.load("res://imported/%s/%s.png" % [gfx_filename, gfx]))
+				sf.add_frame("default", ResourceLoader.load("user://imported/%s/%s.res" % [gfx_filename, gfx]))
 				gfx += gfx_per_step
 
 			assert(ResourceSaver.save("%s/%s_%s.res" % [ANIMATION_PATH, item_name, animation_idx], sf) == OK)

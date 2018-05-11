@@ -1,48 +1,43 @@
 extends Node
 
 func parse(dir):
-	#var figure_data2 = $cod_parser.txt_to_json("res://imported/figuren.cod.txt", "res://imported/figuren.cod.json")
-	#$animation_generator.generate_animations(figure_data2)
-	#return
-	
 	copy_islands(dir)
-	copy_directory(dir + "/SAVEGAME", "res://imported/saves", "gam")
-	
+	copy_directory(dir + "/SAVEGAME", "user://imported/saves", "gam")
 	
 	# Import .cod files
-	$cod_parser.cod_to_txt(dir + "/haeuser.cod", "res://imported/haeuser.cod.txt")
-	$cod_parser.cod_to_txt(dir + "/figuren.cod", "res://imported/figuren.cod.txt")
-	var object_data = $cod_parser.txt_to_json("res://imported/haeuser.cod.txt", "res://imported/haeuser.cod.json")
-	var figure_data = $cod_parser.txt_to_json("res://imported/figuren.cod.txt", "res://imported/figuren.cod.json")
+	$cod_parser.cod_to_txt(dir + "/haeuser.cod", "user://imported/haeuser.cod.txt")
+	$cod_parser.cod_to_txt(dir + "/figuren.cod", "user://imported/figuren.cod.txt")
+	var object_data = $cod_parser.txt_to_json("user://imported/haeuser.cod.txt", "user://imported/haeuser.cod.json")
+	var figure_data = $cod_parser.txt_to_json("user://imported/figuren.cod.txt", "user://imported/figuren.cod.json")
 	
 	# Import .bsh files - takes a long time.
-	$bsh_parser.bsh_convert(dir + "/GFX/NUMBERS.BSH", "res://imported/NUMBERS")
-	$bsh_parser.bsh_convert(dir + "/GFX/STADTFLD.BSH", "res://imported/stadtfld")
+	$bsh_parser.bsh_convert(dir + "/GFX/NUMBERS.BSH", "user://imported/NUMBERS")
+	$bsh_parser.bsh_convert(dir + "/GFX/STADTFLD.BSH", "user://imported/STADTFLD")
 	
-	$bsh_parser.bsh_convert(dir + "/GFX/EFFEKTE.BSH", "res://imported/EFFEKT")
-	$bsh_parser.bsh_convert(dir + "/GFX/FISCHE.BSH", "res://imported/WAL")
-	$bsh_parser.bsh_convert(dir + "/GFX/GAUKLER.BSH", "res://imported/GAUKLER")
-	$bsh_parser.bsh_convert(dir + "/GFX/MAEHER.BSH", "res://imported/MAEHER")
-	$bsh_parser.bsh_convert(dir + "/GFX/SCHATTEN.BSH", "res://imported/SCHATTEN")
-	$bsh_parser.bsh_convert(dir + "/GFX/SHIP.BSH", "res://imported/SHIP")
-	$bsh_parser.bsh_convert(dir + "/GFX/SOLDAT.BSH", "res://imported/SOLDAT")
-	$bsh_parser.bsh_convert(dir + "/GFX/TIERE.BSH", "res://imported/RIND")
-	$bsh_parser.bsh_convert(dir + "/GFX/TRAEGER.BSH", "res://imported/TRAEGER")
+	$bsh_parser.bsh_convert(dir + "/GFX/EFFEKTE.BSH", "user://imported/EFFEKT")
+	$bsh_parser.bsh_convert(dir + "/GFX/FISCHE.BSH", "user://imported/WAL")
+	$bsh_parser.bsh_convert(dir + "/GFX/GAUKLER.BSH", "user://imported/GAUKLER")
+	$bsh_parser.bsh_convert(dir + "/GFX/MAEHER.BSH", "user://imported/MAEHER")
+	$bsh_parser.bsh_convert(dir + "/GFX/SCHATTEN.BSH", "user://imported/SCHATTEN")
+	$bsh_parser.bsh_convert(dir + "/GFX/SHIP.BSH", "user://imported/SHIP")
+	$bsh_parser.bsh_convert(dir + "/GFX/SOLDAT.BSH", "user://imported/SOLDAT")
+	$bsh_parser.bsh_convert(dir + "/GFX/TIERE.BSH", "user://imported/RIND")
+	$bsh_parser.bsh_convert(dir + "/GFX/TRAEGER.BSH", "user://imported/TRAEGER")
 	
-	$bsh_parser.bsh_convert(dir + "/ToolGfx/TOOLS.BSH", "res://imported/tools")
+	$bsh_parser.bsh_convert(dir + "/ToolGfx/TOOLS.BSH", "user://imported/tools")
 	
 	# Generate tileset
-	$tileset_writer.write_tileset(object_data, "res://imported/stadtfld", "res://imported/stadtfld.tres")
+	$tileset_writer.write_tileset(object_data, "user://imported/STADTFLD", "user://imported/STADTFLD_tileset.tres")
 	
 	$animation_generator.generate_animations(figure_data)
 	$building_generator.generate_buildings(object_data)
 
 func copy_islands(dir):
-	copy_directory(dir + "/NOKLIMA", "res://imported/islands/noklima", "scp")
-	copy_directory(dir + "/NORD",    "res://imported/islands/north", "scp")
-	copy_directory(dir + "/NORDNAT", "res://imported/islands/northnat", "scp")
-	copy_directory(dir + "/SUED",    "res://imported/islands/south", "scp")
-	copy_directory(dir + "/SUEDNAT", "res://imported/islands/southnat", "scp")
+	copy_directory(dir + "/NOKLIMA", "user://imported/islands/noklima", "scp")
+	copy_directory(dir + "/NORD",    "user://imported/islands/north", "scp")
+	copy_directory(dir + "/NORDNAT", "user://imported/islands/northnat", "scp")
+	copy_directory(dir + "/SUED",    "user://imported/islands/south", "scp")
+	copy_directory(dir + "/SUEDNAT", "user://imported/islands/southnat", "scp")
 
 func copy_directory(from_dir_path, to_dir_path, filetype):
 	var from_dir = Directory.new()

@@ -3,7 +3,7 @@ extends Node2D
 var fields = null
 
 func _ready():
-	var game = $save_game_loader.load_game("res://imported/saves/game00.gam")
+	var game = $save_game_loader.load_game("user://imported/saves/game00.gam")
 	
 	fields = get_field_dict(get_tree().get_nodes_in_group("fields"))
 	

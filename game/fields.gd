@@ -4,7 +4,7 @@ func _ready():
 	var field_data = load_field_data()
 	
 	var dir = Directory.new()
-	assert(dir.open("res://imported/buildings") == OK)
+	assert(dir.open("user://imported/buildings") == OK)
 	
 	dir.list_dir_begin(true)
 	while true:
@@ -12,7 +12,7 @@ func _ready():
 		if filename == "":
 			break
 		var id = int(filename)
-		var res_path = "res://imported/buildings/%s/%s.tscn" % [id, id]
+		var res_path = "user://imported/buildings/%s/%s.tscn" % [id, id]
 		assert(dir.file_exists(res_path))
 		var scene = load(res_path).instance()
 		
@@ -32,8 +32,8 @@ func _ready():
 		scene.init(config, rauch_animations)
 
 func load_field_data():
-	var object_data = load_json("res://imported/haeuser.cod.json")
-	var figure_data = load_json("res://imported/figuren.cod.json")
+	var object_data = load_json("user://imported/haeuser.cod.json")
+	var figure_data = load_json("user://imported/figuren.cod.json")
 	
 	var field_data = {}
 	for item in object_data['objects']['HAUS']['items'].values():
