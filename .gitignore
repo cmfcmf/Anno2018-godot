@@ -3,12 +3,6 @@
 # Temporary test files
 /test/tmp
 
-# Imported Anno files
-/imported/*
-!/imported/.gitkeep
-!/imported/base.gd
-!/imported/base_building.gd
-
 /tmp
 
 # Godot .import folder
