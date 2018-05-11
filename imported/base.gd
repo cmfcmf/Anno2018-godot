@@ -77,10 +77,10 @@ func draw_field(map, pos, rotation, animation_step):
 			animated_sprite.self_modulate = Color(1.0, 1.0, 1.0, 0.5)
 		map.add_child(animated_sprite)
 		
-		add_debug_marker(0, map, top_pos)
-		add_debug_marker(1, map, bottom_pos)
-		add_debug_marker(2, map, fahn_pos)
-		add_debug_marker(3, map, fahne_pos_off)
+		#add_debug_marker(0, map, top_pos)
+		#add_debug_marker(1, map, bottom_pos)
+		#add_debug_marker(2, map, fahn_pos)
+		#add_debug_marker(3, map, fahne_pos_off)
 
 
 func add_debug_marker(id, map, pos):
