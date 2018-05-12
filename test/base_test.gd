@@ -4,6 +4,9 @@ const base_path = "res://test/tmp"
 
 func setup():
 	gut.directory_delete_files(base_path)
+	var temp_dir = Directory.new()
+	temp_dir.open(base_path)
+	temp_dir.make_dir_recursive(base_path)
 
 func dump_file(path, content):
 	if not path.begins_with('res://'):

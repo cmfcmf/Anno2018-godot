@@ -2,13 +2,15 @@ extends Node
 
 func cod_to_txt(input_path, output_path):
 	var cod_file = File.new()
-	cod_file.open(input_path, File.READ)
+	assert(OK == cod_file.open(input_path, File.READ))
 	
 	var out_file = File.new()
-	out_file.open(output_path, File.WRITE)
+	assert(OK == out_file.open(output_path, File.WRITE))
 	
-	while not cod_file.eof_reached():
+	while true:
 		var byte = cod_file.get_8()
+		if cod_file.eof_reached():
+			break
 		# Yes, it really is 256, not 255=0xFF.
 		out_file.store_8(256 - byte)
 	
