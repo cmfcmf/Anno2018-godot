@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 func _on_start_game_btn_pressed():
 	get_tree().change_scene("res://game/game.tscn")

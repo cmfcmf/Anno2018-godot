@@ -1,11 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://menu/main_menu.gd" type="Script" id=1]
-[ext_resource path="res://parser/parsers.tscn" type="PackedScene" id=2]
+[ext_resource path="res://menu/theme.tres" type="Theme" id=1]
+[ext_resource path="res://menu/main_menu.gd" type="Script" id=2]
+[ext_resource path="res://parser/parsers.tscn" type="PackedScene" id=3]
 
-[node name="main_menu" type="Node2D"]
+[node name="main_menu" type="Control" index="0"]
 
-script = ExtResource( 1 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+_sections_unfolded = [ "Theme" ]
 
 [node name="start_game_btn" type="Button" parent="." index="0"]
 
@@ -130,7 +143,10 @@ size_flags_vertical = 1
 popup_exclusive = false
 window_title = "Verzeichnis wählen"
 resizable = false
-dialog_text = "Please select the Anno 1602 folder."
+dialog_text = "Please select the Anno 1602 folder.
+
+Note: Importing files takes several minutes. The game will appear frozen. Please be patient :)
+"
 dialog_hide_on_ok = true
 mode_overrides_title = true
 mode = 2
@@ -165,7 +181,70 @@ resizable = false
 dialog_hide_on_ok = true
 _sections_unfolded = [ "Dialog" ]
 
-[node name="parsers" parent="." index="6" instance=ExtResource( 2 )]
+[node name="parsers" parent="." index="6" instance=ExtResource( 3 )]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." index="7"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 230.0
+margin_top = 20.0
+margin_right = 990.0
+margin_bottom = 580.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+bbcode_enabled = true
+bbcode_text = "Hi!
+
+Thank you for trying Anno2018. This is very much a work in progress. 
+
+You will [b]not[/b] be able to really \"play\" Anno1602 (yet).
+Only very basic island rendering is currently implemented.
+
+Oh, the multiplayer button? That one's not working either. 
+
+# Getting Started
+
+- Click _Load Anno 1602 files_.
+- Navigate to your Anno 1602 installation folder and click _Select current folder_.
+- Grab a coffee. This step takes several minutes. The game will appear to be frozen.
+- After the import has finished, click _Start Game_.
+
+
+If you'd like to help out, checkout the GitHub Repository at [url]https://github.com/cmfcmf/Anno2018[/url]."
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Hi!
+
+Thank you for trying Anno2018. This is very much a work in progress. 
+
+You will not be able to really \"play\" Anno1602 (yet).
+Only very basic island rendering is currently implemented.
+
+Oh, the multiplayer button? That one's not working either. 
+
+# Getting Started
+
+- Click _Load Anno 1602 files_.
+- Navigate to your Anno 1602 installation folder and click _Select current folder_.
+- Grab a coffee. This step takes several minutes. The game will appear to be frozen.
+- After the import has finished, click _Start Game_.
+
+
+If you'd like to help out, checkout the GitHub Repository at https://github.com/cmfcmf/Anno2018."
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode", "Theme", "custom_styles" ]
 
 [connection signal="pressed" from="start_game_btn" to="." method="_on_start_game_btn_pressed"]
 
