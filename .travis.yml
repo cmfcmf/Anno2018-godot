@@ -13,7 +13,7 @@ install:
 # Download Gut
 before_script:
 - wget https://github.com/bitwes/Gut/archive/v6.3.0.zip -O /tmp/gut.zip
-- unzip /tmp/gut.zip
+- unzip /tmp/gut.zip -d /tmp
 - mv /tmp/Gut-6.3.0/addons $TRAVIS_BUILD_DIR
 
 # Each of the following lines exports the game for a given platform.
@@ -22,7 +22,7 @@ before_script:
 # "-v $(pwd)/output/html5:/build/output" writes the exported game to  the "output/html5" folder.
 script:
 # Run unit tests
-- docker run -e EXPORT_NAME="Linux/X11"       -e OUTPUT_FILENAME="${GAME_NAME}"         -v $(pwd):/build/src -v $(pwd)/output/linux:/build/output   gamedrivendesign/godot-export --entrypoint 'sh -c /build/godot --path /build/src -d -s addons/gut/gut_cmdln.gd'
+- docker run -v $(pwd):/build/src --entrypoint 'sh -c /build/godot --path /build/src -d -s addons/gut/gut_cmdln.gd' gamedrivendesign/godot-export 
 # (Try to) export the game
 #- docker run -e EXPORT_NAME="HTML5"           -e OUTPUT_FILENAME="index.html"           -v $(pwd):/build/src -v $(pwd)/output/html5:/build/output   gamedrivendesign/godot-export
 - docker run -e EXPORT_NAME="Linux/X11"       -e OUTPUT_FILENAME="${GAME_NAME}"         -v $(pwd):/build/src -v $(pwd)/output/linux:/build/output   gamedrivendesign/godot-export
