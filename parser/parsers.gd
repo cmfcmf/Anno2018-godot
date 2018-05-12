@@ -2,7 +2,7 @@ extends Node
 
 func parse(dir):
 	copy_islands(dir)
-	copy_directory(dir + "/SAVEGAME", "user://imported/saves", "gam")
+	copy_directory(dir + "/SAVEGAME", "user://saves", "gam")
 	
 	# Import .cod files
 	$cod_parser.cod_to_txt(dir + "/haeuser.cod", "user://imported/haeuser.cod.txt")
