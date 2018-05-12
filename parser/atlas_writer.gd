@@ -62,15 +62,28 @@ func add_image(id, width, height, data):
 func save():
 	var image = Image.new()
 	image.create_from_data(SIZE, SIZE, false, Image.FORMAT_RGBA8, data)
+	# image.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_GENERIC, 1.0)
 	if DEBUG:
 		assert(image.save_png(path + "_" + str(c) + ".png") == OK)
 	
 	var image_texture = ImageTexture.new()
+	var image_texture_path = path + "_" + str(c) + ".tres"
+	image_texture.storage = ImageTexture.STORAGE_COMPRESS_LOSSLESS
 	image_texture.create_from_image(image, Texture.FLAG_MIPMAPS)
-	ResourceSaver.save(path + "_" + str(c) + ".res", image_texture)
+	assert(ResourceSaver.save(image_texture_path, image_texture, ResourceSaver.FLAG_COMPRESS) == OK)
+	
+	# There currently is a bug in Godot, where the saved resource has incorrectly
+	# set "image = null", when it should be "image = SubResource ( 1 ).
+	# https://github.com/godotengine/godot/issues/18801
+	var tmp = File.new()
+	assert(OK == tmp.open(image_texture_path, File.READ_WRITE))
+	tmp.seek_end()
+	tmp.store_line("image = SubResource( 1 )")
+	tmp.close()
+	
 	# Now reload the texture from disk. This is necessary, otherwise it is 
 	# copied into every single AtlasTexture below.
-	image_texture = load(path + "_" + str(c) + ".res")
+	image_texture = load(image_texture_path)
 	
 	for image in images:
 		var atlas_texture = AtlasTexture.new()
@@ -78,7 +91,7 @@ func save():
 		atlas_texture.region = Rect2(image['pos'], image['size'])
 		atlas_texture.atlas = image_texture
 		
-		ResourceSaver.save(path + "/" + image['id'] + ".res", atlas_texture)
+		assert(ResourceSaver.save(path + "/" + image['id'] + ".res", atlas_texture) == OK)
 	
 	c += 1
 	_reset()

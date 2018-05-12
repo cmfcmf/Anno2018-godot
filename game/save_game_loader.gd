@@ -149,7 +149,7 @@ const island_sizes = {
 func get_island_file_path(island):
 	for size in island_sizes.keys():
 		if island['width'] <= size:
-			return "res://imported/islands/%s/%s%02d.scp" % ["south" if island['is_south'] else "north", island_sizes[size], island['num_base_island']]
+			return "user://imported/islands/%s/%s%02d.scp" % ["south" if island['is_south'] else "north", island_sizes[size], island['num_base_island']]
 	
 	assert(false)
 	

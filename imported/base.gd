@@ -61,7 +61,7 @@ func draw_field(map, pos, rotation, animation_step):
 							Vector2(0, 0)
 		
 		var animated_sprite = AnimatedSprite.new()
-		var frames = load("res://imported/animations/%s_0.res" % rauch_animation_name)
+		var frames = load("user://imported/animations/%s_0.res" % rauch_animation_name)
 		animated_sprite.frames = frames
 		animated_sprite.playing = true
 		animated_sprite.offset = Vector2(0, -200)

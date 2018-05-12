@@ -27,7 +27,7 @@ func parse(dir):
 	$bsh_parser.bsh_convert(dir + "/ToolGfx/TOOLS.BSH", "user://imported/tools")
 	
 	# Generate tileset
-	$tileset_writer.write_tileset(object_data, "user://imported/STADTFLD", "user://imported/STADTFLD_tileset.tres")
+	$tileset_writer.write_tileset(object_data, "user://imported/STADTFLD", "user://imported/STADTFLD_tileset.res")
 	
 	$animation_generator.generate_animations(figure_data)
 	$building_generator.generate_buildings(object_data)

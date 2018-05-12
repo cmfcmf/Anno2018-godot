@@ -1,5 +1,7 @@
 extends Node
 
+const FILE_EXTENSION = ".res"
+
 func write_tileset(object_data, input_path, output_path):
 	var input_dir = Directory.new()
 	input_dir.open(input_path)
@@ -12,19 +14,15 @@ func write_tileset(object_data, input_path, output_path):
 		var filename = input_dir.get_next()
 		if filename == "":
 			break
-		assert(filename.ends_with(".res"))
+		assert(filename.ends_with(FILE_EXTENSION))
 
 		cnt += 1
 		
-		var gfx = int(filename.substr(0, len(filename) - len(".res")))
+		var gfx = int(filename.substr(0, len(filename) - len(FILE_EXTENSION)))
 		
-		var file_path = input_path + "/" + filename
-		var texture = load(file_path)
+		var texture = load(input_path + "/" + filename)
 		
-		var width = texture.get_width()
-		var height = texture.get_height()
-		
-		var offset_y = -height
+		var offset_y = -texture.get_height()
 		var the_item = null
 		for item in object_data['objects']['HAUS']['items'].values():
 			if item['Gfx'] <= gfx and (the_item == null or the_item['Gfx'] < item['Gfx']):
