@@ -22,7 +22,7 @@ before_script:
 # "-v $(pwd)/output/html5:/build/output" writes the exported game to  the "output/html5" folder.
 script:
 # Run unit tests
-- docker run -v $(pwd):/build/src --entrypoint 'sh -c /build/godot --path /build/src -d -s addons/gut/gut_cmdln.gd' gamedrivendesign/godot-export 
+- docker run -v $(pwd):/build/src gamedrivendesign/godot-export /build/godot --path /build/src -d -s /build/src/addons/gut/gut_cmdln.gd 
 # (Try to) export the game
 #- docker run -e EXPORT_NAME="HTML5"           -e OUTPUT_FILENAME="index.html"           -v $(pwd):/build/src -v $(pwd)/output/html5:/build/output   gamedrivendesign/godot-export
 - docker run -e EXPORT_NAME="Linux/X11"       -e OUTPUT_FILENAME="${GAME_NAME}"         -v $(pwd):/build/src -v $(pwd)/output/linux:/build/output   gamedrivendesign/godot-export
