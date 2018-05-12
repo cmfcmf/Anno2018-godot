@@ -4,6 +4,8 @@ const BUILDING_PATH = "user://imported/buildings"
 
 func generate_buildings(object_data):
 	var output_dir = Directory.new()
+	if output_dir.dir_exists(BUILDING_PATH):
+		return
 	assert(output_dir.make_dir_recursive(BUILDING_PATH) == OK)
 	
 	for item in object_data['objects']['HAUS']['items'].values():

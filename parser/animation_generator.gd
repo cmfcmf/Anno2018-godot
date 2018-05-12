@@ -4,6 +4,8 @@ const ANIMATION_PATH = "user://imported/animations"
 
 func generate_animations(figure_data):
 	var animation_dir = Directory.new()
+	if animation_dir.dir_exists(ANIMATION_PATH):
+		return
 	assert(animation_dir.make_dir_recursive(ANIMATION_PATH) == OK)
 
 	for item_name in figure_data['objects']['FIGUR']['items'].keys():
