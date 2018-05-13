@@ -6,14 +6,21 @@ const DEBUG = 1
 var current_heights = []
 var current_x = 0
 var data = PoolByteArray()
-var path = null
 var images = []
+
+var path = null
 var c = 0
+var large_texture = null
 
 func begin(output_path):
 	path = output_path
 	c = 0
+	large_texture = LargeTexture.new()
 	_reset()
+
+func end():
+	_save()
+	assert(OK == ResourceSaver.save(path + "_large.res", large_texture))
 
 func _reset():
 	current_x = 0
@@ -37,7 +44,8 @@ func add_image(id, width, height, data):
 		max_height = max(max_height, current_heights[i])
 	
 	if max_height + height > SIZE:
-		return [false, []]
+		_save()
+		return add_image(id, width, height, data)
 	
 	assert(max_height + height <= SIZE)
 	
@@ -57,9 +65,9 @@ func add_image(id, width, height, data):
 	
 	current_x += width
 	
-	return [true, Vector2(x, y)]
+	return OK
 
-func save():
+func _save():
 	var image = Image.new()
 	image.create_from_data(SIZE, SIZE, false, Image.FORMAT_RGBA8, data)
 	# image.compress(Image.COMPRESS_S3TC, Image.COMPRESS_SOURCE_GENERIC, 1.0)
@@ -81,9 +89,12 @@ func save():
 	tmp.store_line("image = SubResource( 1 )")
 	tmp.close()
 	
+	image_texture = load(image_texture_path)
+	assert(OK == ResourceSaver.save(path + "_" + str(c) + ".res", image_texture, ResourceSaver.FLAG_COMPRESS))
+	
 	# Now reload the texture from disk. This is necessary, otherwise it is 
 	# copied into every single AtlasTexture below.
-	image_texture = load(image_texture_path)
+	# image_texture = load(image_texture_path)
 	
 	for image in images:
 		var atlas_texture = AtlasTexture.new()
@@ -92,10 +103,10 @@ func save():
 		atlas_texture.atlas = image_texture
 		
 		assert(ResourceSaver.save(path + "/" + image['id'] + ".res", atlas_texture) == OK)
+		large_texture.add_piece(Vector2(0, 0), atlas_texture)
 	
 	c += 1
 	_reset()
-
 
 func _add_image_data(x_pos, y_pos, width, height, pixels):
 	var j = 0

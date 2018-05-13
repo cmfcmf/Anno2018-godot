@@ -156,6 +156,7 @@ func txt_to_json(input_path, output_path):
 				objects[current_object]['items'][current_item][key] = value
 				if last_gfx_name != null:
 					objects[current_object]['items'][current_item]['GfxCategory'] = last_gfx_name
+					objects[current_object]['items'][current_item]['GfxCategoryMapped'] = gfx_map[last_gfx_name]
 			else:
 				if objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][current_nested_item].has(key):
 					assert(typeof(objects[current_object]['items'][current_item]['nested_objects'][current_nested_object][current_nested_item][key]) == TYPE_DICTIONARY)

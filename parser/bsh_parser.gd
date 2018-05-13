@@ -12,7 +12,7 @@ func bsh_convert(input_path, output_path):
 	var out_dir = Directory.new()
 	if out_dir.dir_exists(output_path):
 		print("Skipping BSH conversion of %s because %s already exists." % [input_path, output_path])
-		return
+		return null
 		
 	assert(out_dir.make_dir_recursive(output_path) == OK)
 	assert(out_dir.open(output_path) == OK)
@@ -96,19 +96,10 @@ func bsh_convert(input_path, output_path):
 
 					ch -= 1
 		
-		var result = atlas_writer.add_image(str(i + 1), bsh_image['width'], bsh_image['height'], bsh_image['pixels'])
-		var has_worked = result[0]
-		var atlas_pos = result[1]
-		
-		if not has_worked:
-			# Could not add image to atlas, because atlas is full.
-			# Save current atlas and try again.
-			atlas_writer.save()
-			
-			result = atlas_writer.add_image(str(i + 1), bsh_image['width'], bsh_image['height'], bsh_image['pixels'])
-			has_worked = result[0]
-			atlas_pos = result[1]
-		
+		assert(OK == atlas_writer.add_image(str(i + 1), bsh_image['width'], bsh_image['height'], bsh_image['pixels']))
+	
 	bsh_file.close()
 	
-	atlas_writer.save()
+	atlas_writer.end()
+	
+	return num_images
