@@ -4,14 +4,26 @@
 
 extends Node
 
+const SHIP_TYPES = {
+	0x15: 'HANDEL1',
+	0x17: 'HANDEL2',
+	0x19: 'KRIEG1',
+	0x1B: 'KRIEG2',
+	0x1D: 'HANDLER',
+	0x1F: 'PIRAT',
+	0x25: 'HANDLER', # TODO, Why is this duplicated?
+}
+
 func load_game(game_path):
 	var game_file = File.new()
 	assert(game_file.open(game_path, File.READ) == OK)
 	
 	var islands = []
+	var ships = []
 	var types = {}
 	while not game_file.eof_reached():
 		var block = read_block(game_file)
+		var old_position = game_file.get_position()
 		
 		if block['type'] == 'INSEL5':
 			var island = parse_island(game_file)
@@ -35,9 +47,14 @@ func load_game(game_path):
 			var island = islands.pop_back()
 			island['current_fields'] = parse_island_buildings(island, block, game_file)
 			islands.append(island)
+		elif block['type'] == 'SHIP4':
+			assert(ships.size() == 0)
+			ships = parse_ships(block, game_file)
 		else:
 			discard_block(block, game_file)
-
+		
+		assert(game_file.get_position() == old_position + block['length'])
+		
 		types[block['type']] = true
 
 	game_file.close()
@@ -45,8 +62,68 @@ func load_game(game_path):
 	print(types)
 	
 	return {
-		'islands': islands
+		'islands': islands,
+		'ships': ships,
 	}
+
+func parse_ships(block, game_file):
+	var ships = []
+	var start_pos = game_file.get_position()
+	while game_file.get_position() < start_pos + block['length']:
+		ships.append(parse_ship(game_file))
+	return ships
+
+func parse_ship(data):
+	var ship = {}
+	ship['name'] = data.get_buffer(28).get_string_from_ascii()
+	ship['position'] = Vector2(
+		data.get_16(),
+		data.get_16()
+	)
+	ship['_1'] = data.get_buffer(3 * 4)
+	ship['course_from'] = data.get_32()
+	ship['course_to'] = data.get_32()
+	ship['course_current'] = data.get_32()
+	ship['_2'] = data.get_32()
+	ship['hp'] = data.get_16()
+	ship['_3'] = data.get_32()
+	ship['canons'] = data.get_8()
+	ship['flags'] = data.get_8()
+	ship['sell_price'] = data.get_16()
+	ship['id'] = data.get_16()
+	ship['type'] = data.get_16()
+	ship['_4'] = data.get_8()
+	ship['player'] = data.get_8()
+	ship['_5'] = data.get_32()
+	ship['rotation'] = data.get_16()
+	ship['trade_stops'] = parse_trade_stops(data, 8)
+	ship['_6'] = data.get_16()
+	ship['cargo'] = parse_goods(data, 8)
+	ship['type_name'] = SHIP_TYPES[ship['type']]
+	return ship
+
+func parse_trade_stops(data, n):
+	var trade_stops = []
+	for i in range(n):
+		trade_stops.append({
+			'id': data.get_8(),
+			'kontor_id': data.get_8(),
+			'_1': data.get_16(),
+			'goods': parse_goods(data, 2),
+			'_2': data.get_buffer(16),
+		})
+	return trade_stops
+
+func parse_goods(data, n):
+	var cargo = []
+	for i in range(n):
+		cargo.append({
+			'good_id': data.get_16(),
+			'amount': data.get_16(),
+			'action': data.get_32(), # 0 == 'load', 1 == 'unload'
+		})
+	return cargo
+
 
 func parse_island_buildings(island, block, data):
 	var data_len = block['length']
