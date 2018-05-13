@@ -4,7 +4,7 @@
 [ext_resource path="res://menu/main_menu.gd" type="Script" id=2]
 [ext_resource path="res://parser/parsers.tscn" type="PackedScene" id=3]
 
-[node name="main_menu" type="Control" index="0"]
+[node name="main_menu" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -96,7 +96,32 @@ text = "Run Tests"
 flat = false
 align = 1
 
-[node name="multiplayer_btn" type="Button" parent="." index="3"]
+[node name="start_animation_test_btn" type="Button" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 30.0
+margin_top = 180.0
+margin_right = 204.0
+margin_bottom = 212.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Animation Test"
+flat = false
+align = 1
+
+[node name="multiplayer_btn" type="Button" parent="." index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -122,7 +147,7 @@ flat = false
 align = 1
 _sections_unfolded = [ "Rect" ]
 
-[node name="load_files_dialog" type="FileDialog" parent="." index="4"]
+[node name="load_files_dialog" type="FileDialog" parent="." index="5"]
 
 visible = false
 anchor_left = 0.0
@@ -153,12 +178,12 @@ mode = 2
 access = 2
 filters = PoolStringArray(  )
 show_hidden_files = false
-current_dir = "E:/Spiele/Klassiker/Anno 1602"
+current_dir = "/home/cmfcmf/dev/Anno 1602"
 current_file = ""
-current_path = "E:/Spiele/Klassiker/Anno 1602/"
+current_path = "/home/cmfcmf/dev/Anno 1602/"
 _sections_unfolded = [ "Dialog" ]
 
-[node name="warning_dialog" type="AcceptDialog" parent="." index="5"]
+[node name="warning_dialog" type="AcceptDialog" parent="." index="6"]
 
 visible = false
 anchor_left = 0.0
@@ -181,9 +206,9 @@ resizable = false
 dialog_hide_on_ok = true
 _sections_unfolded = [ "Dialog" ]
 
-[node name="parsers" parent="." index="6" instance=ExtResource( 3 )]
+[node name="parsers" parent="." index="7" instance=ExtResource( 3 )]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." index="7"]
+[node name="RichTextLabel" type="RichTextLabel" parent="." index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -251,6 +276,8 @@ _sections_unfolded = [ "BBCode", "Theme", "custom_styles" ]
 [connection signal="pressed" from="load_files_btn" to="." method="_on_load_files_btn_pressed"]
 
 [connection signal="pressed" from="run_tests_btn" to="." method="_on_run_tests_btn_pressed"]
+
+[connection signal="pressed" from="start_animation_test_btn" to="." method="_on_start_animation_test_btn_pressed"]
 
 [connection signal="pressed" from="multiplayer_btn" to="." method="_on_multiplayer_btn_pressed"]
 

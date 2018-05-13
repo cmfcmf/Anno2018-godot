@@ -9,6 +9,9 @@ func _on_multiplayer_btn_pressed():
 func _on_run_tests_btn_pressed():
 	get_tree().change_scene("res://test/tests.tscn")
 
+func _on_start_animation_test_btn_pressed():
+	get_tree().change_scene("res://entities/animation_sample.tscn")
+
 func _on_load_files_btn_pressed():
 	$load_files_dialog.popup_centered_ratio(0.75)
 
