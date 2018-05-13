@@ -61,16 +61,17 @@ func draw_field(map, pos, rotation, animation_step):
 							Vector2(0, 0)
 		
 		var animated_sprite = AnimatedSprite.new()
-		var frames = load("user://imported/animations/%s_0.res" % rauch_animation_name)
+		var frames = load("user://imported/animations/%s.tres" % rauch_animation_name)
 		animated_sprite.frames = frames
+		animated_sprite.animation = '0_0'
 		animated_sprite.playing = true
 		animated_sprite.offset = Vector2(0, -200)
 		animated_sprite.centered = false
 		# This effectively positions the sprite's center bottom on fahn_pos
 		animated_sprite.position = fahn_pos + \
 								   Vector2(
-										-frames.get_frame('default', 0).get_width() / 2, 
-										-frames.get_frame('default', 0).get_height()) + \
+										-frames.get_frame('0_0', 0).get_width() / 2, 
+										-frames.get_frame('0_0', 0).get_height()) + \
 								   Vector2(0, 0)
 								
 		if rauch_animation_name.begins_with('RAUCH'):

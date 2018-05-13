@@ -46,7 +46,10 @@ func set_rotation(rotation_idx):
 
 func play():
 	var animation_name = "%s_%s" % [str(current_animation_idx), str(current_rotation_idx)]
-	# Make the AnimatedSprite's origin the bottom left corner
-	$animated_sprite.offset = Vector2(0, -$animated_sprite.frames.get_frame(animation_name, 0).get_height())
+	# Make the AnimatedSprite's origin the bottom center
+	$animated_sprite.transform = Transform2D(0.0, Vector2(
+		-$animated_sprite.frames.get_frame(animation_name, 0).get_width() / 2,
+		-$animated_sprite.frames.get_frame(animation_name, 0).get_height()
+	))
 	$animated_sprite.play(animation_name)
 	$animated_sprite.show()

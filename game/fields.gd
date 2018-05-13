@@ -1,7 +1,9 @@
 extends Node
 
+var field_data = null
+
 func _ready():
-	var field_data = load_field_data()
+	field_data = game_data.get_data()
 	
 	var dir = Directory.new()
 	assert(dir.open("user://imported/buildings") == OK)
@@ -30,25 +32,3 @@ func _ready():
 		scene.add_to_group("fields")
 		add_child(scene)
 		scene.init(config, rauch_animations)
-
-func load_field_data():
-	var object_data = load_json("user://imported/haeuser.cod.json")
-	var figure_data = load_json("user://imported/figuren.cod.json")
-	
-	var field_data = {}
-	for item in object_data['objects']['HAUS']['items'].values():
-		# TODO: Flussmündungsmauern haben gleiche ID!
-		#assert(not field_data.has(item['Id']))
-		field_data[item['Id']] = item
-	
-	return {
-		'fields': field_data,
-		'animations': figure_data['objects']['FIGUR']['items'],
-	}
-	
-func load_json(path):
-	var json_file = File.new()
-	assert(json_file.open(path, File.READ) == OK)
-	var parse_result = JSON.parse(json_file.get_as_text())
-	assert(parse_result.error == OK)
-	return parse_result.result

@@ -14,7 +14,9 @@
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="fields" type="Node" parent="." index="0"]
+[node name="ships" type="Node" parent="." index="0"]
+
+[node name="fields" type="Node" parent="." index="1"]
 
 script = ExtResource( 2 )
 
@@ -22,8 +24,9 @@ script = ExtResource( 2 )
 
 [node name="land" type="Node" parent="fields" index="1"]
 
-[node name="map" type="Node2D" parent="." index="1"]
+[node name="map" type="Node2D" parent="." index="2"]
 
+editor/display_folded = true
 script = ExtResource( 3 )
 
 [node name="buildings" type="TileMap" parent="map" index="0"]
@@ -68,17 +71,19 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Cell" ]
 
-[node name="players" type="Node2D" parent="." index="2"]
+[node name="players" type="Node2D" parent="." index="3"]
+
+editor/display_folded = true
 
 [node name="player" type="Node" parent="players" index="0"]
 
 script = ExtResource( 5 )
 
-[node name="hud" parent="." index="3" instance=ExtResource( 6 )]
+[node name="hud" parent="." index="4" instance=ExtResource( 6 )]
 
 _sections_unfolded = [ "Transform" ]
 
-[node name="camera" type="Camera2D" parent="." index="4"]
+[node name="camera" type="Camera2D" parent="." index="5"]
 
 anchor_mode = 1
 rotating = false
@@ -105,7 +110,7 @@ editor_draw_drag_margin = false
 script = ExtResource( 7 )
 _sections_unfolded = [ "Drag Margin", "Editor", "Limit", "Offset", "Smoothing", "Transform" ]
 
-[node name="save_game_loader" type="Node" parent="." index="5"]
+[node name="save_game_loader" type="Node" parent="." index="6"]
 
 script = ExtResource( 8 )
 
