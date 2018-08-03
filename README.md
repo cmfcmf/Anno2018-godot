@@ -1,3 +1,5 @@
+# Deprecated - I am no longer working on this version. A new web-based version, written in TypeScript, can be found at https://github.com/cmfcmf/Anno2018-js.
+
 # Anno 2018
 
 This is a rewrite of twenty-year-old Anno 1602 using a modern game engine (Godot).
